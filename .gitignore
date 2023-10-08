@@ -3,7 +3,8 @@
 # dependencies
 /Backend/node_modules
 Frontend\node_modules
-
+Frontend\src\config.js
+Backend\config.js
 /.pnp
 .pnp.js
 

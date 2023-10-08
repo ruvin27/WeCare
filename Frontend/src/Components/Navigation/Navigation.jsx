@@ -4,7 +4,7 @@ import Options from './Options'
 import Donate from './Donate'
 import { useAuth } from '../../Contexts/AuthContext'
 import img from '../../images/logowecare.png'
-import img1 from '../../images/Loader.png'
+import { Link } from 'react-router-dom' 
 
 function Navigation() {
     const {user, isLoading} = useAuth();
@@ -35,7 +35,7 @@ function Navigation() {
                 }
                 , 2000);
             }} className={styles.typewriter}>
-            <h1 style={{color:"white", marginLeft:"10px"}} >WeCare</h1>
+            <Link to="/"><h1 style={{color:"white", marginLeft:"10px"}} >WeCare</h1></Link>
             </div>}
             {blinkerOpen === false && !loaderOpen &&<div>
             <h1 style={{color:"white", marginLeft:"10px"}} >WeCare</h1>

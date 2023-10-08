@@ -6,6 +6,7 @@ import { auth } from "../Firebase";
 import {useAuth} from '../Contexts/AuthContext'
 import axios from 'axios';
 
+
 const Register = () => {
   const {  login } = useAuth();
 

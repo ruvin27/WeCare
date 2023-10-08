@@ -1,0 +1,185 @@
+.homeContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f4f6f8;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../../images/background.jpg');
+    background-size: cover;  /* Makes sure the image covers the entire container */
+    background-position: center;  /* Center the image */
+    background-repeat: no-repeat;  /* Don't repeat the image if it's too small for the container */
+    overflow: hidden;
+  }
+  
+  .homeTitle {
+    font-size: 3rem;
+    margin-bottom: 20px;
+  }
+  
+  .homeSlogan {
+    font-size: 1.5rem;
+    margin-bottom: 40px;
+    font-style: italic;
+  }
+  
+  .homeDescription {
+    width: 60%;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .homeLink {
+    background-color: #007BFF;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    transition: background-color 0.3s;
+  }
+  
+  .homeLink:hover {
+    background-color: #0056b3;
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .homeContainer {
+    /* ...existing styles... */
+    animation: fadeIn 2s;
+  }  
+  .homeContainer {
+    /* ...existing styles... */
+    background-color: #000;  /* Black background */
+    color: #eee;  /* Light text for contrast */
+  }
+  
+  /* ... other styles ... */
+  
+  .homeLink {
+    background-color: #555;  /* Slightly lighter than the background for buttons */
+    /* ...existing styles... */
+  }
+  
+  .homeLink:hover {
+    background-color: #777;  /* A shade lighter on hover for buttons */
+  }
+  
+  /* ... existing styles ... */
+
+/* Slide in from left */
+@keyframes slideFromLeft {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Slide in from right */
+  @keyframes slideFromRight {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Zoom in effect */
+  @keyframes zoomIn {
+    from {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  .homeTitle {
+    /* ... existing styles ... */
+    animation: slideFromLeft 1s forwards;
+  }
+  
+  .homeSlogan {
+    /* ... existing styles ... */
+    animation: slideFromRight 1s forwards;
+  }
+  
+  .homeDescription {
+    /* ... existing styles ... */
+    animation: zoomIn 1.5s forwards;
+  }
+  /* ... existing styles ... */
+
+/* Typing animation */
+@keyframes typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+  
+  /* Typing cursor animation */
+  @keyframes blink {
+    50% {
+      border-color: transparent;
+    }
+  }
+  
+  .homeDescription {
+    /* ... existing styles ... */
+    
+    /* Add styles for typing effect */
+    overflow: hidden;  /* Hide text until it's "typed" */
+  border-right: .15em solid #eee;  /* Cursor */
+  white-space: nowrap;  /* Keeps content on a single line */
+  width: 0;  /* Start with no width (it will expand as typing occurs) */
+  animation: typing 6.5s steps(40, end) forwards, blink .75s step-end infinite;
+  }
+  /* Fade-in animation */
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .homeContainer {
+    /* ...existing styles... */
+    
+    animation: fadeIn 2s ease-in-out;  /* Apply fade-in animation over 2 seconds */
+  }
+/* Zoom animation */
+@keyframes zoomIn {
+    from {
+      background-size: 100%;
+    }
+    to {
+      background-size: 110%;
+    }
+  }
+  
+  .homeContainer {
+    /* ...existing styles... */
+    
+    animation: zoomIn 5s infinite alternate;  /* Apply zoom animation with alternate looping */
+  }

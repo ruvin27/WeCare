@@ -7,14 +7,15 @@ import { GiSandsOfTime } from "react-icons/gi";
 import { BiTime } from "react-icons/bi";
 import { useAuth } from "../../Contexts/AuthContext";
 import axios from "axios";
-import { Link, useNavigate } from 'react-router-dom';
 import Reservation from './reservations'
+import Confetti from 'react-confetti';
 
 function Dashboard() {
   const { user } = useAuth();
   const [donationData, setDonationData] = useState([]);
   const [reservationOpen, setReservationOpen] = useState(false)
-  const navigate = useNavigate();
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [donationId, setDonationId] = useState("");
 
 
   const formatDateTime = (dateTimeString) => {
@@ -60,8 +61,13 @@ function Dashboard() {
         .post(
           `http://localhost:5000/createbooking/${Creator_id}/${Donation_id}`
         )
-        .then(() => {
-          window.location.reload();
+        .then( () => {
+          setShowConfetti(true);
+          setTimeout(async () => {
+            await setShowConfetti(false);
+            window.location.reload();
+          }, 4000);
+          
         })
         .catch((error) => {
           console.log(error);
@@ -82,6 +88,9 @@ function Dashboard() {
         });
   }
 
+
+
+
   return (
     <div
       className={styles.mainDiv}
@@ -91,7 +100,8 @@ function Dashboard() {
         height: "Calc(100vh - 69px)",
         overflowY: "scroll",
       }}
-    >
+      >
+      {showConfetti && <Confetti />}
       <div
         style={{
           width: "100%",
@@ -106,6 +116,7 @@ function Dashboard() {
           return (
             new Date(item.TimeRange[1]) > new Date() && 
             <div
+              className= {styles.cardDetail}
               style={{
                 display: "flex",
                 flexDirection: "column",
@@ -128,17 +139,21 @@ function Dashboard() {
                 </div>
                 
                 {user?.isOrganization && item.Donator_id === user._id ? <div style={{display:"flex"}}>
-                <button style={{ fontSize: "12px", marginRight:"5px"}} onClick={() => {setReservationOpen(true)}}>
+                <button style={{ fontSize: "12px", marginRight:"5px", cursor: "pointer"}} onClick={() => {
+                  setReservationOpen(true);
+                  setDonationId(item._id);
+                  
+                  }}>
                     Reservations
                 </button>
-                <button style={{ fontSize: "12px" }} onClick={() => {handleDelete(item._id)}}>
+                <button style={{ fontSize: "12px", cursor: "pointer" }} onClick={() => {handleDelete(item._id)}}>
                     Delete
                   </button></div>:
                 (!item.isReserved ? (
-                  <button style={{ fontSize: "12px" }} onClick={() => {handleReserve(user._id,item._id)}}>
+                  <button style={{ fontSize: "12px", cursor: "pointer" }} onClick={() => {handleReserve(user._id,item._id)}}>
                     Reserve
                   </button>
-                ) : <div style={{color:"#00A783", fontSize:"12px"}}>Reserved</div>
+                ) : <div style={{color:"#00A783", fontSize:"12px", cursor: "pointer"}}>Reserved</div>
                 )}
               </div>
               <div
@@ -299,7 +314,7 @@ function Dashboard() {
       </div>
 
 { reservationOpen && <div style={{width:"100vw", height:"100vh", backgroundColor:"rgba(0,0,0,0.4)", position:"absolute", zIndex:"998", top:"0", left:"0", transition:"all 0.25s ease-in-out", overflow:"none", display:"flex", alignItems:"center", justifyContent:"center"}}>
-            <Reservation setoptionsOpen={toggleDonate} />
+            <Reservation setoptionsOpen={toggleDonate} id={donationId} />
         </div>}
 
     </div>

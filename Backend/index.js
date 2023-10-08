@@ -6,6 +6,7 @@ const PORT = process.env.PORT || 5000;
 const User = require("./Models/User");
 const Donation = require("./Models/Donation");
 const Booking = require("./Models/Booking");
+const MongoUrl = require('./config')
 
 // Middleware
 app.use(express.json(),cors({
@@ -16,7 +17,7 @@ app.use(express.json(),cors({
   
 // Connect to MongoDB
 mongoose
-	.connect("mongodb+srv://ruvin27:hatred@cluster0.4ucai2l.mongodb.net/?retryWrites=true&w=majority", {
+	.connect(MongoUrl, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 	})
@@ -69,6 +70,72 @@ app.get("/donations/:id", async (req, res) => {
 		}
 
 		res.status(200).json(donations);
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: "Server error" });
+	}
+});
+
+app.get("/donation/:id", async (req, res) => {
+	try {
+		const {id} = req.params;
+		var donation = await Donation.findOne({ _id: id });
+		console.log(donation)
+		res.status(200).json(donation);
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: "Server error" });
+	}
+});
+
+app.get("/reservations/:id", async (req, res) => {
+	try {
+		const {id} = req.params;
+		var reservations = await Booking.find({ Creator_id: id });
+		if (reservations.length === 0) {
+			return res.status(200).json({ message: "No donations found for this Account" });
+		}
+		const objectList = [];
+
+		for( let i=0; i<reservations.length; i++){
+            const donation = await Donation.findOne({  _id: reservations[i].Donation_id});
+
+			const newObj = {
+				name: donation.Donation,
+				date: reservations[i].Date,
+				address: donation.Address
+			}
+			objectList.push(newObj);
+
+        }
+		res.status(200).json(objectList);
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: "Server error" });
+	}
+});
+
+app.get("/allreservations/:donation_id", async (req, res) => {
+	try {
+		const {donation_id} = req.params;
+		var reservations = await Booking.find({ Donation_id: donation_id });
+		if (reservations.length === 0) {
+			return res.status(200).json({ message: "No donations found for this Account" });
+		}
+		const objectList = [];
+
+		for( let i=0; i<reservations.length; i++){
+            const reservationUser = await User.findOne({  _id: reservations[i].Creator_id});
+
+			const newObj = {
+				name: reservationUser.name,
+				date: reservations[i].Date,
+				email: reservationUser.email
+			}
+			objectList.push(newObj);
+
+        }
+		res.status(200).json(objectList);
 	} catch (error) {
 		console.error(error);
 		res.status(500).json({ message: "Server error" });

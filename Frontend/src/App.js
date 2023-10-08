@@ -8,10 +8,9 @@ import {
 import Register from './Authentication/Register';
 import LoginForm from './Authentication/LoginForm';
 import ForgotPassword from './Authentication/ForgotPassword';
-import { useAuth } from './Contexts/AuthContext';
+import HomePage from './Components/HomePage/homePage'
 
 function App() {
-  const {user, isLoading} = useAuth();
   document.body.style.margin = 0;
   document.body.style.padding = 0;
   document.body.style.overflow = "none";
@@ -24,6 +23,10 @@ function App() {
         <Navigation/>
         <Dashboard/>
       </div>
+      },
+      {
+        path: "/home",
+        element: <HomePage/>,
       },
       {
         path: "/register",
