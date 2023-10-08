@@ -1,24 +1,43 @@
-import logo from './logo.svg';
 import './App.css';
+import Dashboard from './Components/Dashboard/Dashboard';
+import Navigation from './Components/Navigation/Navigation';
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import Register from './Authentication/Register';
+import LoginForm from './Authentication/LoginForm';
+import ForgotPassword from './Authentication/ForgotPassword';
+import { useAuth } from './Contexts/AuthContext';
 
 function App() {
+  const {user, isLoading} = useAuth();
+  document.body.style.margin = 0;
+  document.body.style.padding = 0;
+  document.body.style.overflow = "none";
+  document.body.style.backgroundColor = "#121316";
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RouterProvider router={createBrowserRouter([
+      {
+        path: "/",
+        element:  <div style={{width:"100vw", height:"100vh", display:"flex", flexDirection:"column", flexWrap:"wrap", backgroundColor:"#121316", overflow:"none"}}>
+        <Navigation/>
+        <Dashboard/>
+      </div>
+      },
+      {
+        path: "/register",
+        element: <Register/>,
+      },
+      {
+        path: "/login",
+        element: <LoginForm/>,
+      },
+      {
+        path: "/ForgotPassword",
+        element: <ForgotPassword/>
+      }
+    ])}/>
   );
 }
 
